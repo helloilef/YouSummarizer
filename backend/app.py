@@ -396,7 +396,7 @@ def google_login_callback():
     user_info = resp.json()
     session["user_email"] = user_info["email"]
 
-    return redirect("http://localhpst:3000")  
+    return redirect("http://localhost:3000")  
 
 @app.route("/me")
 def get_user():
@@ -461,6 +461,28 @@ def webhook():
         # TODO: Mark user as premium in DB
 
     return jsonify({"status": "success"}), 200
+
+# -------------------------- RAG Setup ----------------------
+
+from rag import answer_query
+
+@app.route('/rag', methods=['POST', 'OPTIONS'])
+def rag_endpoint():
+    if request.method == 'OPTIONS':
+        return '', 200
+
+    data = request.get_json()
+    transcript = data.get('transcript')
+    query = data.get('query')
+
+    if not transcript or not query:
+        return jsonify({'error': 'transcript and query are required'}), 400
+
+    try:
+        result, sources = answer_query(query, transcript)
+        return jsonify({'answer': result})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 @app.route('/')

@@ -6,9 +6,9 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import Navbar from "@/components/Navbar/page";
+import RAGQuery from '@/components/RAG/page';
 import { supabase } from '@/lib/supabaseClient';
 import jsPDF from "jspdf";
 import { useRouter } from 'next/navigation';
@@ -577,6 +577,9 @@ function ResultsView({summary, transcript, mcqs,flashcards}: {summary: string, t
       })()}
     </div>
     <Separator />
+     {/* TODO: Implement RAGQuery or import it if available */}
+     {/* <RAGQuery transcript={transcript} /> */}
+     <RAGQuery transcript={transcript} />
   </div>
 </CardContent>
                 </Card>
